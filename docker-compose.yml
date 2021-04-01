@@ -1,0 +1,25 @@
+version: "3.8"
+services:
+  db:
+    image: postgres:12-alpine
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    environment:
+      POSTGRES_HOST_AUTH_METHOD: trust
+
+  web: &web
+    build: .
+    volumes:
+      - ./:/go/src/hot_reload_docker
+    environment:
+      HISTFILE: "/app/log/.bash_history"
+      EDITOR: "vi"
+      DATABASE_URL: "postgres://postgres:postgres@db:5432"
+    depends_on:
+      - db
+#    command: fresh -c .fresh.conf
+    expose: ["8080"]
+    ports: ["8080:8080"]
+
+volumes:
+  postgres:
