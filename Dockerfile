@@ -13,7 +13,7 @@ RUN go mod init
 RUN go get github.com/pilu/fresh
 RUN go get github.com/go-kit/kit/transport/http
 
-#CMD ["fresh"]
-EXPOSE 8080
+# CMD ["fresh"]
 
+EXPOSE 8080
 CMD ["go", "run", "main.go"]

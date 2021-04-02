@@ -1,16 +1,12 @@
 package main
 
 import (
-	// "flag"
-	// "fmt"
+	"fmt"
 	"net/http"
-	// "os"
-
 	"context"
 	"encoding/json"
 	"errors"
 	"log"
-	// "strings"
 
 	"github.com/go-kit/kit/endpoint"
 	httptransport "github.com/go-kit/kit/transport/http"
@@ -52,6 +48,7 @@ func makeCountEndpoint(svc StringService) endpoint.Endpoint {
 
 func decodeCountRequest(_ context.Context, r *http.Request) (interface{}, error) {
 	var request countRequest
+	fmt.Println(r.URL.Query().Get(`s`))
 	if err := json.NewDecoder(r.Body).Decode(&request); err != nil {
 		return nil, err
 	}
@@ -76,5 +73,5 @@ func main() {
 	// ハンドラーセットする。
 	http.Handle("/count", countHandler)
 	// 8080ポートでサーバーを起動する。
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	log.Fatal(http.ListenAndServe(":8081", nil))
 }
